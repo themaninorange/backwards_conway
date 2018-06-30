@@ -26,32 +26,35 @@ def drawGrid(e, gapx = 100, gapy = 100, sizex =1000, sizey = 1000):
 
 
 def advanceState():
-    global i
-    if i == 0:
-        i = 1
-    else:
-        i = 0
+    #Nodes that were alive that die
+    #Need an efficient way to couple items in a list that are only 1 off from each other.
+    [[]]
+    x - y  = 0, 1, -1
+    return 0
 
 def drawCanvas(canvas):
     global i
     drawGrid(canvas)
-    drawCell(canvas, "white" if i == 1 else "blue" , 200, 200)
-    print("${0} during drawCanvas".format(i))
+    for cell in livingCells:
+        drawCell(canvas, "blue" , 100*cell[0], 100*cell[1])
+    #print("${0} during drawCanvas".format(i))
 
 def update():
     advanceState()
     drawCanvas(canvas)
-    print("${0} during update".format(i))
+    #print("${0} during update".format(i))
     root.after(1000,update)
 
 def main():
     update()
-    print("${0} in main".format(i))
+    #print("${0} in main".format(i))
     root.mainloop()
 
 #Globals
 i = 0
-print("${0} after declaration".format(i))
+livingCells = {(0,0), (1,1), (1, 0), (0, 1)}
+#cellSize =
+#print("${0} after declaration".format(i))
 root = tk.Tk()
 button1 = tk.Button(root, text = "Taxation is Theft. click to close.")
 canvas = tk.Canvas(root, width=500, height = 500, bg = 'white')
