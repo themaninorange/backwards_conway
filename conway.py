@@ -67,6 +67,28 @@ def update():
     livingCells = nextGeneration
     root.after(1000,update)
 
+def findNewLife():
+    neighborToLife = set([*[(x-1, y-1), (x-1, y), (x-1, y+1), \
+                            (x,   y-1),           (x,   y+1), \
+                            (x+1, y-1), (x+1, y), (x+1, y+1)] for x, y in livingCells])
+    # ^ This is broken.  I want to find all cells adjacent to living cells
+    # I will use that list, once made, to check all of the dead cells to see if
+    #    they come [back] to life.
+        pass
+    setx = set([point[0] for point in livingCells])
+    sety = set([point[1] for point in livingCells])
+    locationLookupx = {x: set([point for point in livingCells if abs(point[0] - x) <= 1]) for x in setx}
+    locationLookupy = {y: set([point for point in livingCells if abs(point[1] - y) <= 1]) for y in sety}
+
+    # Now we want to find the intersection.
+    locationLookupFull = {(x,y): locationLookupx[x].intersection(locationLookupy[y]) for x in setx for y in sety}
+
+    #
+
+
+
+
+
 def main():
     update()
     print('LIFE: ' + str(livingCells))
@@ -75,8 +97,12 @@ def main():
 
 #Globals
 i = 0
+
 #livingCells = {(0,0), (1,1), (1, 0), (0, 1)}
-livingCells = frozenset({(0,2), (0,1), (1, 2), (2, 0), (2,1), (2,2)})
+#livingCells = frozenset({(0,2), (0,1), (1, 2), (2, 0), (2,1), (2,2)})
+
+livingCells = {(0,0), (1,1), (1, 0), (0, 1)} #type: set
+knownDead = set()
 #cellSize =
 #print("${0} after declaration".format(i))
 root = tk.Tk()
